@@ -1,7 +1,7 @@
 {
   "name": "買い物リスト",
   "short_name": "買い物",
-  "id": "./",
+  "id": "/shopping-list-app/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

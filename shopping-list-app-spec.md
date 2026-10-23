@@ -217,7 +217,8 @@ keyPath：`key`
 - `activate` 時に削除するのは、**名前が `shoppinglist-` で始まり、かつ現行バージョンでないキャッシュだけ**とする。他の接頭辞のキャッシュ（ジム記録アプリの `gym-weight-` など）には触れない。
 - 新しい版は、次回の起動時に反映される形でよい（入力中の内容が消えるため、自動リロードはしない）。
 - Service Workerの登録は `updateViaCache: 'none'` を指定する。
-- manifest：`name`「買い物リスト」、`short_name`「買い物」、`id`・`start_url`・`scope`は `./`、`display: standalone`、`orientation: portrait`、`background_color` と `theme_color` は `#000000`、アイコン（192px、512px、maskable）。
+- manifest：`name`「買い物リスト」、`short_name`「買い物」、`id` は `/shopping-list-app/`、`start_url`・`scope`は `./`、`display: standalone`、`orientation: portrait`、`background_color` と `theme_color` は `#000000`、アイコン（192px、512px、maskable）。
+  - `id` はmanifestの場所ではなくオリジンを基準に解釈されるため、`./` と書くとオリジン直下（`https://<ユーザー名>.github.io/`）になる。同じオリジンの他アプリと区別するため、リポジトリのパスで明示する。**`id` はインストール後に変更しない**（変えると別のアプリとして扱われる）。
 - アイコンは外部素材を使わず、黒背景に黄色のカートで生成する。
 
 ## 9. セキュリティと注意点
