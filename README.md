@@ -35,9 +35,12 @@ python -m http.server 8000
 
 ## 公開（GitHub Pages）
 
-1. GitHub に Public リポジトリを作り、このフォルダの中身を push する
-2. GitHub の Settings → Pages で、公開するブランチ（例：`main` の `/ (root)`）を設定する
-3. Android の Chrome で公開URL（`https://<ユーザー名>.github.io/<リポジトリ名>/`）を開き、「アプリをインストール」または「ホーム画面に追加」を行う
+- リポジトリ：`hori-shopping-list/shopping-list-app`（Settings → Pages で `main` の `/ (root)` を公開）
+- 公開URL：<https://hori-shopping-list.github.io/shopping-list-app/>
+
+Android の Chrome で公開URLを開き、メニューの「アプリをインストール」を行う。
+
+**専用のOrganizationに置いている理由**：Android の Chrome では、1つのオリジン（`https://〇〇.github.io`）にインストールできるアプリは1つだけで、同じオリジンの2つ目は「このアプリはすでにインストールされています」となりインストールできない。ジム記録アプリが `githubhori.github.io` にあるため、買い物リストは Organization `hori-shopping-list` で別のオリジンにしている。今後ほかのアプリを作る場合も、アプリごとに Organization を分けること。
 
 ## 更新の手順（重要）
 
@@ -49,7 +52,7 @@ self.SHOPPINGLIST_VERSION = 'v2'; // v1 → v2 → v3 …
 
 - バージョンを上げないと、端末は古いキャッシュを使い続け、変更が反映されない
 - 新しい版は、push 後にアプリを開いたときに裏で読み込まれ、**その次の起動時**に反映される（入力中の内容が消えないよう、自動では再読み込みしない）
-- 古いキャッシュは、`shoppinglist-` で始まるものだけが削除される。同じオリジンにあるジム記録アプリのキャッシュ（`gym-weight-` など）には触れない
+- 古いキャッシュは、`shoppinglist-` で始まるものだけが削除される（同じオリジンに他のアプリがあっても、そのキャッシュには触れない）
 - 新しいファイルを追加した場合は、`sw.js` の `ASSETS` にも追加する
 - IndexedDB のDB名 `shoppinglist-db` は変更しない。データの形を変えるときは、`db.js` の `DB_VERSION` を上げ、`onupgradeneeded` で既存データを移行する
 
@@ -61,7 +64,7 @@ python tools/make_icons.py
 
 ## バックアップ（定期的に行うこと）
 
-Chrome の「サイトデータを削除」はオリジン（`https://<ユーザー名>.github.io`）単位で行われるため、**このアプリとジム記録アプリのデータが同時に消える**。端末の故障や機種変更にも備え、アプリ右上の「バックアップ」から定期的にエクスポートしておくこと。
+Chrome の「サイトデータを削除」を行うと、このアプリのデータは消える。端末の故障や機種変更にも備え、アプリ右上の「バックアップ」から定期的にエクスポートしておくこと。
 
 - エクスポート：全データを `shoppinglist-backup-YYYYMMDD.json` として保存する
 - インポート：バックアップファイルを読み込み、いまのデータを**すべて置き換える**（マージはしない）
